@@ -1,18 +1,70 @@
-[gd_scene load_steps=4 format=3 uid="uid://xuqcogidg58a"]
+[gd_scene load_steps=7 format=3 uid="uid://xuqcogidg58a"]
 
 [ext_resource type="Script" path="res://Scripts/Level.gd" id="1_6u05i"]
 [ext_resource type="Texture2D" uid="uid://7u7kacp1hvn6" path="res://speedy_saucer_assets/purple.png" id="1_nm0rp"]
 [ext_resource type="PackedScene" uid="uid://b60tlb1pbvbg5" path="res://Scenes/Player.tscn" id="2_e7s38"]
+[ext_resource type="PackedScene" uid="uid://bbd5cm0acm145" path="res://Scenes/Maze.tscn" id="4_fux1f"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_eepn0"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_17th4"]
+font_size = 32
 
 [node name="Level1" type="Node2D"]
 script = ExtResource("1_6u05i")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Graphics" type="Node" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Graphics"]
+layer = -10
+
+[node name="Background" type="TextureRect" parent="Graphics/CanvasLayer"]
 z_index = -100
-offset_right = 1152.0
-offset_bottom = 648.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_nm0rp")
 stretch_mode = 1
 
+[node name="StartLabel" type="Label" parent="Graphics"]
+z_index = -5
+offset_left = -253.0
+offset_top = -147.0
+offset_right = 9.0
+offset_bottom = -56.0
+text = "Pub with no beer"
+label_settings = SubResource("LabelSettings_eepn0")
+
+[node name="EndLabel" type="Label" parent="Graphics"]
+z_index = -5
+offset_left = 192.0
+offset_top = -285.0
+offset_right = 406.0
+offset_bottom = -194.0
+text = "Pub with beer
+"
+label_settings = SubResource("LabelSettings_eepn0")
+
+[node name="Tut01" type="Label" parent="Graphics"]
+z_index = -5
+offset_left = 212.0
+offset_top = -32.0
+offset_right = 558.0
+offset_bottom = 282.0
+text = "But there's nothing
+ so lonesome so
+morbid or drear
+Than to stand in a bar
+ of a pub with no beer."
+label_settings = SubResource("LabelSettings_17th4")
+horizontal_alignment = 1
+
 [node name="Player" parent="." instance=ExtResource("2_e7s38")]
-position = Vector2(160, 158)
+
+[node name="Maze" parent="." instance=ExtResource("4_fux1f")]
+z_index = -10
+
+[connection signal="body_exited" from="Maze" to="." method="_on_maze_body_exited"]
